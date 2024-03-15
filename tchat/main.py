@@ -1,1 +1,4 @@
-print("Tchat app")
+
+while True:
+    content = input(">> ")
+    print(f"You said: {content}")
