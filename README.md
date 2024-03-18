@@ -23,3 +23,7 @@ on langchain and chatGPT from Udemy.
 - `pipenv install` - Installs dependencies
 - `pipenv shell` - Activates virtual environment
  
+
+## TODO
+
+- add instructions for running each app in app README
