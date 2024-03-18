@@ -1,7 +1,7 @@
 # Apps using Langchain and ChatGPT
 
 Apps created as part of a
-[course](https://www.udemy.com/course/chatgpt-and-langchain-the-complete-developers-masterclass/?couponCode=24T5FS31824)
+[course](https://www.udemy.com/course/chatgpt-and-langchain-the-complete-developers-masterclass/)
 on langchain and chatGPT from Udemy.
 
 ## Setup Requirements
