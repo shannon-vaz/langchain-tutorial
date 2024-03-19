@@ -8,6 +8,7 @@ from langchain.prompts import (
 )
 from langchain.agents import OpenAIFunctionsAgent, AgentExecutor
 from langchain.schema import SystemMessage
+from langchain.memory import ConversationBufferMemory
 
 from tools.sql import list_tables, run_query_tool, describe_tables_tool
 from tools.report import write_report_tool
@@ -21,7 +22,7 @@ tables = list_tables()
 print(f"Tables:\n{tables}")
 
 prompt = ChatPromptTemplate(
-    input_variables=["input", "agent_scratchpad"],
+    input_variables=["input", "chat_history", "agent_scratchpad"],
     messages=[
         SystemMessage(
             content=(
@@ -31,20 +32,21 @@ prompt = ChatPromptTemplate(
                 "or what columns exist. Instead, use the 'describe_tables' function"
             )
         ),
+        MessagesPlaceholder(variable_name="chat_history"),
         HumanMessagePromptTemplate.from_template("{input}"),
         MessagesPlaceholder(variable_name="agent_scratchpad"),
     ],
 )
 
 tools = [run_query_tool, describe_tables_tool, write_report_tool]
+memory = ConversationBufferMemory(memory_key="chat_history", return_messages=True)
 
 agent = OpenAIFunctionsAgent(llm=chat, prompt=prompt, tools=tools)
 
-agent_executor = AgentExecutor(agent=agent, verbose=True, tools=tools)
+agent_executor = AgentExecutor(agent=agent, verbose=True, tools=tools, memory=memory)
 
 # human_query = "how many users are in the database?"
 # human_query = "How many users have provided an address?"
-human_query = (
-    "Summarize the top 5 most popular products? Write the results to a report file."
-)
+human_query = "How many orders are there? Write the results to an html report"
 agent_executor(human_query)
+agent_executor("Repeat the exact process for users.")
