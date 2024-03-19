@@ -6,6 +6,8 @@ from langchain_core.documents import Document
 
 
 class RedundantFilterRetriever(BaseRetriever):
+    """Custom Retriever to perform retrieval while filtering redundant
+    documents."""
     embeddings: Embeddings
     chroma: Chroma
 

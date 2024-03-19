@@ -17,13 +17,12 @@ on langchain and chatGPT from Udemy.
 - Each app has it's own `.env` file that must be created following the
   `.env.example` file in the app's directory
 - Before running the app, install dependencies and create the `.env` file
+- Activate the virtual environment for the app with `pipenv shell` before
+  running the app
+- After running the app, remember to switch the virtual env when running another app
 
 ## Useful pipenv commands
 
 - `pipenv install` - Installs dependencies
 - `pipenv shell` - Activates virtual environment
  
-
-## TODO
-
-- add instructions for running each app in app README
