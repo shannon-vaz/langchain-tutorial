@@ -18,7 +18,7 @@
 </script>
 
 <ErrorModal />
-<div class="container mx-auto h-screen">
+<div class="container mx-auto h-screen dark:text-gray-400">
 	<Navbar />
 	<slot />
 </div>
