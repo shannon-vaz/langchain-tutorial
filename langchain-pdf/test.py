@@ -11,11 +11,12 @@ from threading import Thread
 
 load_dotenv()
 
-queue = Queue()
-
 
 class StreamingHandler(BaseCallbackHandler):
     """Custom callback handler for streaming llm generated tokens"""
+
+    def __init__(self, queue):
+        self.queue = queue
 
     def on_llm_new_token(
         self,
@@ -26,7 +27,7 @@ class StreamingHandler(BaseCallbackHandler):
         parent_run_id: UUID | None = None,
         **kwargs: Any
     ) -> Any:
-        queue.put(token)
+        self.queue.put(token)
 
     def on_llm_end(
         self,
@@ -36,7 +37,7 @@ class StreamingHandler(BaseCallbackHandler):
         parent_run_id: UUID | None = None,
         **kwargs: Any
     ) -> Any:
-        queue.put(None)
+        self.queue.put(None)
 
     def on_llm_error(
         self,
@@ -46,10 +47,10 @@ class StreamingHandler(BaseCallbackHandler):
         parent_run_id: UUID | None = None,
         **kwargs: Any
     ) -> Any:
-        queue.put(None)
+        self.queue.put(None)
 
 
-chat = ChatOpenAI(streaming=True, callbacks=[StreamingHandler()])
+chat = ChatOpenAI(streaming=True)
 
 prompt = ChatPromptTemplate.from_messages([("human", "{content}")])
 
@@ -58,9 +59,12 @@ class StreamingChain(LLMChain):
     """Custom LLM chain for streaming llm generated tokens"""
 
     def stream(self, input):
+        queue = Queue()
+        handler = StreamingHandler(queue)
+
         def task():
             """Run the chain with the input variables"""
-            self(input)
+            self(input, callbacks=[handler])
 
         Thread(target=task).start()
 
