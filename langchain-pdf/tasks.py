@@ -1,5 +1,5 @@
 import os
-from invoke import task
+from invoke.tasks import task
 
 
 @task

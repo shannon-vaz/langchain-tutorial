@@ -1,4 +1,4 @@
-from typing import Dict
+from typing import Dict, List
 from langchain.schema.messages import AIMessage, HumanMessage, SystemMessage
 from app.web.db import db
 from app.web.db.models import Message
@@ -7,7 +7,7 @@ from app.web.db.models.conversation import Conversation
 
 def get_messages_by_conversation_id(
     conversation_id: str,
-) -> AIMessage | HumanMessage | SystemMessage:
+) -> List[AIMessage | HumanMessage | SystemMessage]:
     """
     Finds all messages that belong to the given conversation_id
 

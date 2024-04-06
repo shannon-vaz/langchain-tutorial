@@ -3,8 +3,8 @@ import pinecone
 from langchain.vectorstores import Pinecone
 from app.chat.embeddings.openai import embeddings
 
-pinecone_api_key = os.getenv("PINECONE_API_KEY")
-pinecone_env_name = os.getenv("PINECONE_ENV_NAME")
+pinecone_api_key = os.getenv("PINECONE_API_KEY", "")
+pinecone_env_name = os.getenv("PINECONE_ENV_NAME", "")
 pinecone_index_name = os.getenv("PINECONE_INDEX_NAME")
 
 pinecone.init(
