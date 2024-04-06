@@ -55,12 +55,15 @@ chat = ChatOpenAI(streaming=True)
 prompt = ChatPromptTemplate.from_messages([("human", "{content}")])
 
 
-class StreamingChain(LLMChain):
+class StreamableChain:
     """Custom LLM chain for streaming llm generated tokens"""
 
     def stream(self, input):
         queue = Queue()
         handler = StreamingHandler(queue)
+
+        if not hasattr(self, "__call__") or not callable(self):
+            raise NotImplementedError("Chain must be callable")
 
         def task():
             """Run the chain with the input variables"""
@@ -73,6 +76,10 @@ class StreamingChain(LLMChain):
             if token is None:
                 break
             yield token
+
+
+class StreamingChain(StreamableChain, LLMChain):
+    pass
 
 
 chain = StreamingChain(llm=chat, prompt=prompt)
