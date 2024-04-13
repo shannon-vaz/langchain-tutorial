@@ -1,12 +1,12 @@
 import os
 from dotenv import load_dotenv
-from langchain.chat_models import ChatOpenAI
+from langchain_openai import ChatOpenAI
 from langchain.prompts import (
     ChatPromptTemplate,
     HumanMessagePromptTemplate,
     MessagesPlaceholder,
 )
-from langchain.agents import OpenAIFunctionsAgent, AgentExecutor
+from langchain.agents import AgentExecutor, create_openai_functions_agent
 from langchain.schema import SystemMessage
 from langchain.memory import ConversationBufferMemory
 
@@ -43,12 +43,16 @@ prompt = ChatPromptTemplate(
 tools = [run_query_tool, describe_tables_tool, write_report_tool]
 memory = ConversationBufferMemory(memory_key="chat_history", return_messages=True)
 
-agent = OpenAIFunctionsAgent(llm=chat, prompt=prompt, tools=tools)
+agent = create_openai_functions_agent(llm=chat, prompt=prompt, tools=tools)
 
 agent_executor = AgentExecutor(agent=agent, tools=tools, memory=memory)
 
 # human_query = "how many users are in the database?"
 # human_query = "How many users have provided an address?"
 human_query = "How many orders are there? Write the results to an html report"
-agent_executor(human_query)
-# agent_executor("Repeat the exact process for users.")
+agent_executor.invoke(
+    {
+        "input": human_query,
+    }
+)
+# agent_executor({"input": "Repeat the exact process for users."})
