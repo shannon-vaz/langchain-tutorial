@@ -1,5 +1,10 @@
 # First Time Setup
 
+## Additional Dependencies
+
+- Redis server  
+  > Can use the docker compose file provided under `redis` dir to setup redis.
+
 ## Using Pipenv [Recommended]
 
 ```

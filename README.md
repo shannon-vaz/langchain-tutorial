@@ -8,8 +8,8 @@ on langchain and chatGPT from Udemy.
 
 - Python 3.11+
 - Pipenv
-- VScode IDE + Python extensions
 - API key from OpenAI
+- VScode IDE + Python extensions (for development)
 
 ## How to run
 
@@ -20,6 +20,7 @@ on langchain and chatGPT from Udemy.
 - Activate the virtual environment for the app with `pipenv shell` before
   running the app
 - After running the app, remember to switch the virtual env when running another app
+- The app 'langchain-pdf' has it's own README with additional instructions to setup and run
 
 ## Useful pipenv commands
 
