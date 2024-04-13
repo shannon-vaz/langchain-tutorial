@@ -1,9 +1,9 @@
 import os
 from dotenv import load_dotenv
-from langchain.chat_models import ChatOpenAI
+from langchain_openai import ChatOpenAI
 from langchain.vectorstores.chroma import Chroma
 from langchain.chains import RetrievalQA
-from langchain.embeddings import OpenAIEmbeddings
+from langchain_openai import OpenAIEmbeddings
 from redundant_filter_retriever import RedundantFilterRetriever
 
 
@@ -28,6 +28,6 @@ chain = RetrievalQA.from_chain_type(
 
 query = "What is an interesting fact about the English language?"
 
-result = chain.run(query)
+result = chain.invoke(query)
 
 print(result)

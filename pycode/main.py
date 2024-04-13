@@ -1,4 +1,4 @@
-from langchain.llms import OpenAI
+from langchain_openai import OpenAI
 from langchain.prompts import PromptTemplate
 from langchain.chains import LLMChain, SequentialChain
 import os
@@ -30,7 +30,7 @@ chain = SequentialChain(
     output_variables=["code", "test"],
 )
 
-result = chain(
+result = chain.invoke(
     {
         "language": args.language,
         "task": args.task,

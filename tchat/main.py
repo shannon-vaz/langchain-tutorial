@@ -1,6 +1,6 @@
 import os
 from dotenv import load_dotenv
-from langchain.chat_models import ChatOpenAI
+from langchain_openai import ChatOpenAI
 from langchain.chains import LLMChain
 from langchain.prompts import (
     MessagesPlaceholder,
@@ -38,5 +38,5 @@ chain = LLMChain(llm=chat, prompt=prompt, memory=memory)
 
 while True:
     content = input(">> ")
-    result = chain({"content": content})
+    result = chain.invoke({"content": content})
     print(result["text"])
